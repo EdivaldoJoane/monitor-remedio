@@ -1,31 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Monitor de Saúde</title>
+    <title>Monitor de Saúde - Configurar Medicação</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f0f2f5; }
-        .box { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #1c1e21; font-size: 20px; }
-        .input-group { margin: 15px 0; text-align: left; max-width: 250px; margin-left: auto; margin-right: auto; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
-        button { background-color: #0088cc; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .box { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); max-width: 320px; margin: auto; }
+        h1 { color: #0088cc; font-size: 22px; margin-bottom: 20px; }
+        .input-group { margin: 15px 0; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #555; }
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #0088cc; }
+        button { background-color: #0088cc; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 25px; width: 100%; font-size: 16px; transition: background 0.3s; }
+        button:active { background-color: #006699; transform: scale(0.98); }
     </style>
 </head>
 <body>
     <div class="box">
-        <h1>💊 Programar Medicação</h1>
+        <h1>💊 Programar Doses</h1>
         
         <div class="input-group">
-            <label>Horário 1:</label>
+            <label>🌅 Dose da Manhã:</label>
             <input type="time" id="h1" value="08:00">
         </div>
         
         <div class="input-group">
-            <label>Horário 2:</label>
+            <label>☀️ Dose da Tarde:</label>
             <input type="time" id="h2" value="14:00">
+        </div>
+
+        <div class="input-group">
+            <label>🌙 Dose da Noite:</label>
+            <input type="time" id="h3" value="20:00">
         </div>
 
         <button onclick="enviarDados()">SALVAR NO MONITOR</button>
@@ -33,17 +40,24 @@
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand();
+        tg.expand(); // Abre o app em tela cheia no Telegram
 
         function enviarDados() {
-            let hora1 = document.getElementById('h1').value;
-            let hora2 = document.getElementById('h2').value;
+            let h1 = document.getElementById('h1').value;
+            let h2 = document.getElementById('h2').value;
+            let h3 = document.getElementById('h3').value;
             
-            let resultado = "HORARIOS:" + hora1 + "," + hora2;
+            // Cria uma string formatada para o seu ESP32 processar facilmente
+            let resultado = `HORARIOS:${h1},${h2},${h3}`;
             
-            // Isso envia os horários para o seu bot processar
-            tg.sendData(resultado);
-            tg.close();
+            // Feedback visual antes de fechar
+            tg.MainButton.setText("HORÁRIOS SALVOS!");
+            tg.MainButton.show();
+            
+            setTimeout(() => {
+                tg.sendData(resultado); // Envia para o bot
+                tg.close(); // Fecha o Web App
+            }, 500);
         }
     </script>
 </body>
