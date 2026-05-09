@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de Remédios</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; text-align: center; padding: 20px; }
+        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .status { font-size: 1.2em; font-weight: bold; margin: 20px 0; }
+        .online { color: #28a745; }
+        button { background: #0088cc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>💊 Monitor de Saúde</h2>
+        <hr>
+        <div class="status online">● Sistema Ativo</div>
+        <p>Acompanhamento em tempo real do dispositivo ESP32.</p>
+        <button onclick="Telegram.WebApp.close()">Voltar ao Chat</button>
+    </div>
+</body>
+</html>
