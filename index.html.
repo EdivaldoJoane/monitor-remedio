@@ -1,25 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor de Remédios</title>
+    <title>Monitor de Saúde</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; text-align: center; padding: 20px; }
-        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .status { font-size: 1.2em; font-weight: bold; margin: 20px 0; }
-        .online { color: #28a745; }
-        button { background: #0088cc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f0f2f5; }
+        .box { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #1c1e21; font-size: 20px; }
+        .input-group { margin: 15px 0; text-align: left; max-width: 250px; margin-left: auto; margin-right: auto; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+        button { background-color: #0088cc; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>💊 Monitor de Saúde</h2>
-        <hr>
-        <div class="status online">● Sistema Ativo</div>
-        <p>Acompanhamento em tempo real do dispositivo ESP32.</p>
-        <button onclick="Telegram.WebApp.close()">Voltar ao Chat</button>
+    <div class="box">
+        <h1>💊 Programar Medicação</h1>
+        
+        <div class="input-group">
+            <label>Horário 1:</label>
+            <input type="time" id="h1" value="08:00">
+        </div>
+        
+        <div class="input-group">
+            <label>Horário 2:</label>
+            <input type="time" id="h2" value="14:00">
+        </div>
+
+        <button onclick="enviarDados()">SALVAR NO MONITOR</button>
     </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function enviarDados() {
+            let hora1 = document.getElementById('h1').value;
+            let hora2 = document.getElementById('h2').value;
+            
+            let resultado = "HORARIOS:" + hora1 + "," + hora2;
+            
+            // Isso envia os horários para o seu bot processar
+            tg.sendData(resultado);
+            tg.close();
+        }
+    </script>
 </body>
 </html>
